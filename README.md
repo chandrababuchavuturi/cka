@@ -1,1 +1,1 @@
-# cka
+# cka kubectl commands
