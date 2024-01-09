@@ -1,0 +1,42 @@
+1)
+Perform the following tasks:
+Add an init container to hungry-bear (which has been defined in spec file /opt/KUCC00108/pod-spec-KUCC00108.yaml)
+The init container should create an empty file named  /workdir/calm.txt
+If /workdir/calm.txt is not detected, the pod should exit
+Once the spec file has been updated with the init container definition, the pod should be created
+------------------------------
+vi /opt/KUCC00108/pod-spec-KUCC00108.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hungry-bear
+spec:
+  volumes:
+    - name: workdir
+	  emptyDir:
+  containers:
+  - name: checker
+    image: alpine
+    command: ["/bin/sh", "-c", "if [ -f /workdir/calm.txt ];then sleep 100000; else exit 1; fi"]
+	volumeMounts:
+	- name: workdir
+	  mountPath: /workdir
+  initContainers:
+  - name: Create
+    image: alpine
+	command: ["/bin/sh", "-c", "touch /workdir/calm.txt"]
+    volumeMounts:
+	- name: workdir
+	  mountPath: /workdir
+===========================================================================================================================================
+2. List all persistent volumes sorted by capacity, saving the full kubectl output to
+/opt/KUCC00102/volume_list. Use kubectl 's own functionality for sorting the output, and do not
+manipulate it any further.
+---------------------------------------
+k get pv --sort-by=.spec.capacity.storage > /opt/KUCC00102/volume_list
+==================================================================================================
+3.Ensure a single instance of pod nginx is running on each node of the Kubernetes cluster where nginx also
+represents the Image name which has to be used. Do not override any taints currently in place.
+Use DaemonSet to complete this task and use ds-kusc00201 as DaemonSet name.
+
+	
