@@ -1,0 +1,2 @@
+ Liveness probe ur pod is live means running or not if running then success otherwise kubelet will restart
+Readiness probe checks ur pod is to take the traffic or orders from service/loadbalancer
